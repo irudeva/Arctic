@@ -6,8 +6,8 @@
 begin
 
 ;Dates     MM DD
-tstart = (/ 8, 1/)
-tend   = (/ 8,31/)
+tstart = (/ 8, 5/)
+tend   = (/ 8, 31/)
 
 
 ;************************************************
@@ -15,8 +15,6 @@ tend   = (/ 8,31/)
 ;************************************************
   a = addfile("../DATA/hgt.ncep.2016.nc","r")
   lev = a->level
-
-  print (lev)
 
   do il=0,dimsizes(lev)-1
     if (lev(il).eq.300) then
@@ -56,10 +54,10 @@ tend   = (/ 8,31/)
 ;************************************************
 ; create plot
 ;************************************************
-  wks_type                 = "ps"                  ;-- plot output type
+  wks_type                 = "png"                  ;-- plot output type
   ;wks_type@wkBackgroundColor = "black"              ;-- set workstation background to black (or grey18)
   wks_type@wkWidth         =  2500                  ;-- for presentations
-  wks_type@wkHeight        =  2500                  ;-- for presentations
+  wks_type@wkHeight        =  2000                  ;-- for presentations
 
   wks = gsn_open_wks(wks_type,"../output/hgt_slp.2016")             ; send graphics to PNG file
   gsn_define_colormap(wks, "wgne15")
@@ -101,6 +99,7 @@ tend   = (/ 8,31/)
   res2@vpXF                =  0.503                 ;-- set viewport X position 2. panel
   ;res2@tiMainString        = "Slp - " + date2(t1)
   res2@gsnLeftString       = "Slp "
+  res2@gsnRightString      = "hPa "
 
   tires1                   =  True                  ;-- text resources title string
   tires1@txFontColor       = "red"                ;-- change to white
@@ -123,6 +122,7 @@ tend   = (/ 8,31/)
            month_abbr(tointeger(date(t1,1))) + " "  + \
            sprinti("%0.4i", tointeger(date(t1,0)))
   gsn_text_ndc(wks,date_str,0.45,0.85,tires1) ;-- center title string
+  print(date_str)
 
   frame(wks)
 
@@ -135,12 +135,17 @@ tend   = (/ 8,31/)
 ; Use "(/.../)" to avoid re-reading the coordinate arrays, which are
 ; the same for every timestep.
 ;
-    setvalues plot@data
-      "sfDataArray" : (/a->hgt(t,il,:,:)/)
-    end setvalues
-    setvalues plot@data
-      "sfDataArray" : (/a1->slp(t,:,:)/)
-    end setvalues
+
+;    setvalues plot@data
+;      "sfDataArray" : (/a->hgt(t,il,:,:)/)
+;    end setvalues
+;    setvalues plot@data
+;      "sfDataArray" : (/a1->slp(t,:,:)/)
+;    end setvalues
+
+    plot(0) = gsn_csm_contour_map_polar(wks,hgt(t,:,:),res1)
+    plot(1) = gsn_csm_contour_map_polar(wks,slp(t,:,:),res2)
+
 
 ; Use setvalues to change the title too.
 ;    setvalues plot
@@ -154,6 +159,7 @@ tend   = (/ 8,31/)
              month_abbr(tointeger(date(t,1))) + " "  + \
              sprinti("%0.4i", tointeger(date(t,0)))
     gsn_text_ndc(wks,date_str,0.45,0.85,tires1) ;-- center title string
+    print(date_str)
 
 
     frame(wks)
