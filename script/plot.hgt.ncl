@@ -54,7 +54,7 @@ tend   = (/ 8, 31/)
 ;************************************************
 ; create plot
 ;************************************************
-  wks_type                 = "png"                  ;-- plot output type
+  wks_type                 = "ps"                  ;-- plot output type
   ;wks_type@wkBackgroundColor = "black"              ;-- set workstation background to black (or grey18)
   wks_type@wkWidth         =  2500                  ;-- for presentations
   wks_type@wkHeight        =  2000                  ;-- for presentations
