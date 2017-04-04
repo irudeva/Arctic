@@ -4,9 +4,9 @@ gfortran -o $prog.exe $prog.f90
 
 sy=1979
 ly=2016
-HS="N"
-d="ncep"
-lev="slp"
+HS=N
+d=ncep
+lev=slp
 #mon=( "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" )
 
 Din=~/work/Projects/Arctic/DATA/NCEP/trk/
@@ -34,33 +34,37 @@ do
 fin=${Din}trkdat.${lev}.$d.$y
 fouty=${Dout}av.${lev}.$d.$y$HS${reg[$nreg]}
 
-./$prog.exe<<mark
-$fin
-$y
-$fouty
-$nreg
-mark
+#./$prog.exe<<mark
+#$fin
+#$y
+#$fouty
+#$nreg
+#mark
 
 y=$[$y+1]
 done
 
-#gfortran -o av.exe av_m.f90
-#./av.exe<<mark
-# #$Dout
-# $HS
-# $fout
-# $fssn
-# $fmay
-# $fjun
-# $fjul
-# $faug
-# $fsep
-# $sy
-# $ly
-# $nreg
-# mark
-# rm av.exe
-# #rm $Dout????$HS
+echo $HS
+
+gfortran -o av.exe av_m.f90
+./av.exe<<mark
+$Dout
+$HS
+$d
+$lev
+$fout
+$fssn
+$fmay
+$fjun
+$fjul
+$faug
+$fsep
+$sy
+$ly
+$nreg
+mark
+rm av.exe
+ #rm $Dout????$HS
 
 nreg=$[$nreg+1]
 done

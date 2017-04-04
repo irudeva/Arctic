@@ -30,7 +30,8 @@ nyr=20
 endif
 
 open(30,file=fout)
-write(30,'("mmyyyy ncyc ncyc/an"7(6x,a,7x,"sig"),4(6x,a))')"   P"," Dsq","  dp","   R","  RR"," n70","n70c","IDsq","  ID","  IR"," IRR"
+write(30,'("mmyyyy ncyc ncyc/an",7(6x,a,7x,"sig"),4(6x,a))')"   P"," Dsq","  dp","   R","  RR"," n70","n70c",&
+"IDsq","  ID","  IR"," IRR"
 
 do 4 nm=1,12
 open (10,file=ftrk,action='read')
